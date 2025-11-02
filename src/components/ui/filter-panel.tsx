@@ -16,7 +16,7 @@ import CustomText from "./custom-text";
 
 interface FilterPanelProps {
   transactions?: TransactionResponse[];
-  onApply: (filtered: TransactionResponse[]) => void;
+  onApply: (filtered: TransactionResponse[], isFiltered: boolean) => void;
   onClose: () => void;
   open?: boolean;
 }
@@ -31,12 +31,8 @@ const FilterPanel: FC<FilterPanelProps> = ({
 }) => {
   const [start, setStart] = React.useState<string | null>(null);
   const [end, setEnd] = React.useState<string | null>(null);
-  const [selectedTypes, setSelectedTypes] = React.useState<string[]>(() =>
-    transactionTypeOptions.map((option) => option.value)
-  );
-  const [selectedStatuses, setSelectedStatuses] = React.useState<string[]>(() =>
-    transactionStatusOptions.map((option) => option.value)
-  );
+  const [selectedTypes, setSelectedTypes] = React.useState<string[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = React.useState<string[]>([]);
   const [activePicker, setActivePicker] = React.useState<
     "start" | "end" | null
   >(null);
@@ -67,17 +63,26 @@ const FilterPanel: FC<FilterPanelProps> = ({
       return true;
     });
 
-    onApply(filtered);
+    const typeFilterApplied =
+      selectedTypes.length > 0 &&
+      selectedTypes.length < transactionTypeOptions.length;
+    const statusFilterApplied =
+      selectedStatuses.length > 0 &&
+      selectedStatuses.length < transactionStatusOptions.length;
+    const hasActiveFilters =
+      Boolean(start) || Boolean(end) || typeFilterApplied || statusFilterApplied;
+
+    onApply(filtered, hasActiveFilters);
     handleClose();
   }
 
   function clearFilters() {
     setStart(null);
     setEnd(null);
-    setSelectedTypes(transactionTypeOptions.map((option) => option.value));
-    setSelectedStatuses(transactionStatusOptions.map((option) => option.value));
+    setSelectedTypes([]);
+    setSelectedStatuses([]);
     setActivePicker(null);
-    onApply(transactions);
+    onApply(transactions, false);
   }
 
   function applyPreset(days: number) {

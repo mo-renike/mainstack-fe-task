@@ -8,12 +8,12 @@ interface CustomTextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const VARIANT_MAP = {
-  h1: ["h1", "text-[36px] font-bold text-[#131316] leading-[44px]"],
-  h2: ["h2", "text-[28px] font-bold text-[#131316] leading-[36px]"],
-  h3: ["h3", "text-[24px] font-bold text-[#131316] leading-[32px]"],
-  strong: ["strong", "text-[16px] font-semibold text-[#131316] leading-[24px]"],
-  p: ["p", "text-[16px] font-medium text-[#131316] leading-[24px]"],
-  small: ["small", "text-[14px] font-medium text-[#56616B] leading-[20px]"],
+  h1: ["h1", "text-[36px] font-bold text-[#131316]"],
+  h2: ["h2", "text-[28px] font-bold text-[#131316]"],
+  h3: ["h3", "text-[24px] font-bold text-[#131316]"],
+  strong: ["strong", "text-[16px] font-semibold text-[#131316]"],
+  p: ["p", "text-[16px] font-medium text-[#131316]"],
+  small: ["small", "text-[14px] font-medium text-[#56616B]"],
 } as const;
 
 const CustomText: React.FC<CustomTextProps> = ({

@@ -49,6 +49,8 @@ const RevenueDashboardPage: FC = () => {
   const [filteredTransactionsData, setFilteredTransactionsData] = useState<
     TransactionResponse[] | null
   >(null);
+  const [hasActiveFilters, setHasActiveFilters] = useState(false);
+  const [filterPanelKey, setFilterPanelKey] = useState(0);
 
   const sourceTransactions = filteredTransactionsData ?? transactionsData ?? [];
 
@@ -111,10 +113,14 @@ const RevenueDashboardPage: FC = () => {
     : { start: null, end: null };
 
   return (
-    <main className="relative mx-12 relative">
+    <main className="relative py-16 w-[85%] m-auto relative">
       <FilterPanel
+        key={filterPanelKey}
         transactions={transactionsData}
-        onApply={(filtered) => setFilteredTransactionsData(filtered)}
+        onApply={(filtered, isFiltered) => {
+          setHasActiveFilters(isFiltered);
+          setFilteredTransactionsData(isFiltered ? filtered : null);
+        }}
         onClose={() => setShowFilter(false)}
         open={showFilter}
       />
@@ -140,6 +146,12 @@ const RevenueDashboardPage: FC = () => {
         mappedTransactions={mappedTransactions}
         transactionCount={transactionCount}
         onOpenFilter={() => setShowFilter(true)}
+        hasActiveFilters={hasActiveFilters}
+        onClearFilter={() => {
+          setFilteredTransactionsData(null);
+          setHasActiveFilters(false);
+          setFilterPanelKey((prev) => prev + 1);
+        }}
       />
     </main>
   );

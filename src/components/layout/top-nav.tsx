@@ -16,7 +16,7 @@ const TopNav: React.FC = () => {
     : "N/A";
 
   return (
-    <nav className="fixed left-1/2 top-4 z-50 flex w-[min(97%,1408px)] -translate-x-1/2 items-center justify-between rounded-full border border-[#ffffff] bg-white px-6 py-[14px] shadow-[0_2px_4px_rgba(45,59,67,0.05),0_2px_6px_rgba(45,59,67,0.06)]">
+    <nav className="fixed left-1/2 top-4 z-5 flex w-[min(97%,1408px)] -translate-x-1/2 items-center justify-between rounded-full border border-[#ffffff] bg-white px-6 py-[14px] shadow-[0_2px_4px_rgba(45,59,67,0.05),0_2px_6px_rgba(45,59,67,0.06)]">
       <Logo />
       <div className="flex items-center">
         {navItems.map(({ label, icon, isActive }) => (

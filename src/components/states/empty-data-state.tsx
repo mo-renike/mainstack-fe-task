@@ -30,7 +30,7 @@ const EmptyDataState: React.FC<EmptyDataStateProps> = ({
         </h2>
       )}
       {description && (
-        <p className="text-base text-slate-500 max-w-xl">{description}</p>
+        <p className="text-base text-[#56616B] max-w-xl">{description}</p>
       )}
       {action && <div className="mt-4">{action}</div>}
     </div>

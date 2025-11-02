@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="min-h-screen bg-[#ffffff] p-[16px]">
       <TopNav />
-      <div className="mt-24"></div>
+      <div className="mt-20"></div>
       <RevenueDashboardPage />
     </div>
   );

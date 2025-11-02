@@ -4,8 +4,9 @@ import {
   MdCheck,
   MdClose,
   MdKeyboardArrowDown,
-  MdUploadFile,
+  MdOutlineFileDownload,
   MdAccessTime,
+  MdOutlineReceiptLong,
 } from "react-icons/md";
 import CustomText from "../ui/custom-text";
 import EmptyDataState from "../states/empty-data-state";
@@ -52,8 +53,6 @@ const transactionAppearance: Record<
   },
 };
 
-/* getErrorMessage is imported from utils/helpers */
-
 const TransactionRow: FC<{ transaction: TransactionDisplay }> = ({
   transaction,
 }) => {
@@ -88,10 +87,10 @@ const TransactionRow: FC<{ transaction: TransactionDisplay }> = ({
         </div>
       </div>
 
-      <div className="flex items-end justify-between gap-6 sm:gap-10">
+      <div className="flex flex-col gap-0">
         <CustomText
           variant="strong"
-          className="text-[16px]"
+          className="font-bold"
           text={transaction.amount}
         />
         <CustomText
@@ -112,6 +111,8 @@ type Props = {
   mappedTransactions: TransactionDisplay[];
   transactionCount: number;
   onOpenFilter: () => void;
+  hasActiveFilters: boolean;
+  onClearFilter: () => void;
 };
 
 const TransactionsTable: FC<Props> = ({
@@ -122,9 +123,11 @@ const TransactionsTable: FC<Props> = ({
   mappedTransactions,
   transactionCount,
   onOpenFilter,
+  hasActiveFilters,
+  onClearFilter,
 }) => {
   return (
-    <section className="mt-10 rounded-[32px] border border-[#EFF1F6] bg-white px-8 py-8 shadow-[0px_40px_80px_rgba(19,19,22,0.06)]">
+    <section className="mt-16">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <CustomText
@@ -135,23 +138,17 @@ const TransactionsTable: FC<Props> = ({
           />
           <CustomText
             variant="small"
-            className="mt-1"
             text="Your transactions for the selected period"
           />
         </div>
 
-        <div className="flex items-center gap-3">
-          <CustomButton
-            variant="ghost"
-            className="gap-2 px-5 py-2.5"
-            onClick={onOpenFilter}
-          >
-            <MdKeyboardArrowDown size={16} />
-            Filter
+        <div className="flex items-center gap-2">
+          <CustomButton variant="ghost" onClick={onOpenFilter}>
+            Filter <MdKeyboardArrowDown size={16} />
           </CustomButton>
-          <CustomButton variant="ghost" className="gap-2 px-5 py-2.5">
-            <MdUploadFile size={16} />
+          <CustomButton variant="ghost">
             Export list
+            <MdOutlineFileDownload size={16} />
           </CustomButton>
         </div>
       </header>
@@ -166,18 +163,24 @@ const TransactionsTable: FC<Props> = ({
           />
         </div>
       ) : transactionCount === 0 ? (
-        <div className="mt-10">
-          <EmptyDataState
-            description="You have no transactions yet. Once customers start paying you, their transactions will appear here."
-            action={
-              <CustomButton variant="primary" className="px-6">
-                Share a product link
-              </CustomButton>
-            }
-          />
-        </div>
+        hasActiveFilters ? (
+          <div className="mt-10">
+            <EmptyDataState
+              icon={
+                <MdOutlineReceiptLong size={24} className="text-[#131316]" />
+              }
+              title="No matching transaction found for the selected filter"
+              description="Change your filters to see more results, or add a new product."
+              action={
+                <CustomButton variant="outline" onClick={onClearFilter}>
+                  Clear Filter
+                </CustomButton>
+              }
+            />
+          </div>
+        ) : null
       ) : (
-        <div className="mt-6 divide-y divide-[#EFF1F6]">
+        <div className="mt-4">
           {mappedTransactions.map((transaction) => (
             <TransactionRow key={transaction.id} transaction={transaction} />
           ))}

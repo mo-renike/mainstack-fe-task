@@ -35,7 +35,7 @@ const MetricItem: FC<{ metric: Metric }> = ({ metric }) => (
         <MdInfoOutline color="#888F95" size={16} />
       </IconButton>
     </div>
-    <CustomText variant="h2" text={metric.value} />
+    <CustomText className="-mt-3 " variant="h2" text={metric.value} />
   </div>
 );
 
@@ -127,7 +127,7 @@ export const SummarySection: FC<SummarySectionProps> = ({
   transactions,
 }) => {
   return (
-    <section className="p-12">
+    <section>
       {summaryLoading ? (
         <Skeleton variant="summary" />
       ) : summaryError ? (
@@ -137,8 +137,8 @@ export const SummarySection: FC<SummarySectionProps> = ({
         />
       ) : (
         <div className="flex flex-col gap-10">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12">
-            <div className="gap-4 m-auto w-[60%]">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-24">
+            <div className="gap-4 flex-1">
               <div className="flex items-center justify-start gap-12">
                 <div>
                   <CustomText
@@ -161,7 +161,7 @@ export const SummarySection: FC<SummarySectionProps> = ({
               </div>
             </div>
 
-            <div className="w-full max-w-[240px] space-y-5 mt-6 lg:mt-0">
+            <div className="w-full max-w-[240px] space-y-4 mt-6 lg:mt-0">
               {metrics.map((metric) => (
                 <MetricItem key={metric.label} metric={metric} />
               ))}
