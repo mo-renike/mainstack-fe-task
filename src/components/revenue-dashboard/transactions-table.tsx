@@ -113,6 +113,7 @@ type Props = {
   onOpenFilter: () => void;
   hasActiveFilters: boolean;
   onClearFilter: () => void;
+  activeFilterCount?: number;
 };
 
 const TransactionsTable: FC<Props> = ({
@@ -125,6 +126,7 @@ const TransactionsTable: FC<Props> = ({
   onOpenFilter,
   hasActiveFilters,
   onClearFilter,
+  activeFilterCount = 0,
 }) => {
   return (
     <section className="mt-16">
@@ -144,7 +146,18 @@ const TransactionsTable: FC<Props> = ({
 
         <div className="flex items-center gap-2">
           <CustomButton variant="ghost" onClick={onOpenFilter}>
-            Filter <MdKeyboardArrowDown size={16} />
+            <div className="flex items-center gap-2">
+              <span>Filter</span>
+              {activeFilterCount > 0 && (
+                <span
+                  aria-label={`${activeFilterCount} active filters`}
+                  className="flex h-6 min-w-[22px] items-center justify-center rounded-full bg-[#111827] text-white text-xs font-semibold"
+                >
+                  {activeFilterCount}
+                </span>
+              )}
+              <MdKeyboardArrowDown size={16} />
+            </div>
           </CustomButton>
           <CustomButton variant="ghost">
             Export list

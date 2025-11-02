@@ -17,7 +17,11 @@ import CustomText from "./custom-text";
 
 interface FilterPanelProps {
   transactions?: TransactionResponse[];
-  onApply: (filtered: TransactionResponse[], isFiltered: boolean) => void;
+  onApply: (
+    filtered: TransactionResponse[],
+    isFiltered: boolean,
+    activeFilterCount: number
+  ) => void;
   onClose: () => void;
   open?: boolean;
 }
@@ -76,7 +80,12 @@ const FilterPanel: FC<FilterPanelProps> = ({
       typeFilterApplied ||
       statusFilterApplied;
 
-    onApply(filtered, hasActiveFilters);
+    const activeFilterCount =
+      (Boolean(start) || Boolean(end) ? 1 : 0) +
+      (typeFilterApplied ? 1 : 0) +
+      (statusFilterApplied ? 1 : 0);
+
+    onApply(filtered, hasActiveFilters, activeFilterCount);
     handleClose();
   }
 
@@ -86,7 +95,7 @@ const FilterPanel: FC<FilterPanelProps> = ({
     setSelectedTypes([]);
     setSelectedStatuses([]);
     setActivePicker(null);
-    onApply(transactions, false);
+    onApply(transactions, false, 0);
   }
 
   function applyPreset(days: number) {

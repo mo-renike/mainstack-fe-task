@@ -50,6 +50,7 @@ const RevenueDashboardPage: FC = () => {
     TransactionResponse[] | null
   >(null);
   const [hasActiveFilters, setHasActiveFilters] = useState(false);
+  const [activeFilterCount, setActiveFilterCount] = useState(0);
   const [filterPanelKey, setFilterPanelKey] = useState(0);
 
   const sourceTransactions = filteredTransactionsData ?? transactionsData ?? [];
@@ -117,8 +118,9 @@ const RevenueDashboardPage: FC = () => {
       <FilterPanel
         key={filterPanelKey}
         transactions={transactionsData}
-        onApply={(filtered, isFiltered) => {
+        onApply={(filtered, isFiltered, count) => {
           setHasActiveFilters(isFiltered);
+          setActiveFilterCount(count ?? 0);
           setFilteredTransactionsData(isFiltered ? filtered : null);
         }}
         onClose={() => setShowFilter(false)}
@@ -150,8 +152,10 @@ const RevenueDashboardPage: FC = () => {
         onClearFilter={() => {
           setFilteredTransactionsData(null);
           setHasActiveFilters(false);
+          setActiveFilterCount(0);
           setFilterPanelKey((prev) => prev + 1);
         }}
+        activeFilterCount={activeFilterCount}
       />
     </main>
   );
