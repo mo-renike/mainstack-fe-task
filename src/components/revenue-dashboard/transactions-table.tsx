@@ -1,13 +1,13 @@
 import { type FC, type ReactNode } from "react";
 import {
-  MdArrowDownward,
-  MdCheck,
+  MdOutlineArrowOutward,
   MdClose,
   MdKeyboardArrowDown,
   MdOutlineFileDownload,
   MdAccessTime,
   MdOutlineReceiptLong,
 } from "react-icons/md";
+import { FiArrowDownLeft } from "react-icons/fi";
 import CustomText from "../ui/custom-text";
 import EmptyDataState from "../states/empty-data-state";
 import Skeleton from "../states/skeleton";
@@ -20,26 +20,26 @@ type TransactionDisplay = {
   title: string;
   customer?: string;
   statusText: string;
-  visualType: TransactionVisualType;
+  visualType: TransactionType;
   amount: string;
   date: string;
 };
 
-type TransactionVisualType = "deposit" | "withdrawal" | "pending" | "failed";
+type TransactionType = "deposit" | "withdrawal" | "pending" | "failed";
 
 const transactionAppearance: Record<
-  TransactionVisualType,
+  TransactionType,
   { bg: string; textColor: string; icon: ReactNode }
 > = {
   deposit: {
-    bg: "bg-[#E3FFF2]",
-    textColor: "text-[#0F973D]",
-    icon: <MdCheck size={18} />,
+    bg: "bg-[#E3FCF2]",
+    textColor: "text-[#075132]",
+    icon: <FiArrowDownLeft size={18} />,
   },
   withdrawal: {
-    bg: "bg-[#FFF3E0]",
-    textColor: "text-[#F4A609]",
-    icon: <MdArrowDownward size={18} />,
+    bg: "bg-[#F9E3E0]",
+    textColor: "text-[#961100]",
+    icon: <MdOutlineArrowOutward size={18} />,
   },
   pending: {
     bg: "bg-[#FFF3E0]",
@@ -72,18 +72,17 @@ const TransactionRow: FC<{ transaction: TransactionDisplay }> = ({
             className="text-[#131316]"
             text={transaction.title}
           />
-          {transaction.customer && (
-            <CustomText
-              variant="small"
-              className="text-[#56616B]"
-              text={transaction.customer}
-            />
+          {transaction.visualType === "withdrawal" ? (
+            <p className={`font-500 text-[14px] text-[#0EA163]`}>
+              {transaction.statusText}
+            </p>
+          ) : (
+            transaction.customer && (
+              <p className="font-500 text-[14px] text-[#56616B]">
+                {transaction.customer}
+              </p>
+            )
           )}
-          <CustomText
-            variant="small"
-            className={`mt-1 font-semibold ${appearance.textColor}`}
-            text={transaction.statusText}
-          />
         </div>
       </div>
 
