@@ -1,6 +1,6 @@
 # Mainstack Revenue Dashboard
 
-A responsive revenue dashboard built with React, TypeScript, and Vite. It connects to the Mainstack FE task API to surface wallet metrics, render cumulative revenue trends, and list recent transactions with contextual status indicators.
+A revenue dashboard built with React, TypeScript, and Vite. It connects to the Mainstack FE task API to surface wallet metrics, render cumulative revenue trends, and list recent transactions with contextual status indicators.
 
 ## Features
 
@@ -39,22 +39,14 @@ npm run dev
 
 The dev server starts on http://localhost:5173 by default. The app reads data from `https://fe-task-api.mainstack.io`.
 
-### Production build
-
-```bash
-npm run build
-npm run preview
-```
-
 ## Testing
 
-Minimal unit coverage lives under `src/utils`. Run the suite with:
+unit coverage lives under `src/utils`. Run tests with:
 
 ```bash
 npm run test
 ```
 
-Vitest executes tests once in run mode; append `--watch` locally for rapid feedback.
 
 ## Project Structure
 
@@ -66,17 +58,3 @@ src/
   utils/             // Formatting helpers and testable utilities
 ```
 
-## Linting
-
-```bash
-npm run lint
-```
-
-The ESLint configuration ships with the project and enforces TypeScript best practices.
-
-## Environment Notes
-
-- All API calls are read-only and use browser `fetch`. No extra configuration is required.
-- Tailwind CSS utilities are available globally via `@tailwindcss/vite`.
-
-Feel free to adapt the dashboard, extend the filtering panel, or wire additional tests around UI components as you iterate.
