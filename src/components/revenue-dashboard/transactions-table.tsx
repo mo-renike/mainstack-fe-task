@@ -172,7 +172,7 @@ const TransactionsTable: FC<Props> = ({
               title="No matching transaction found for the selected filter"
               description="Change your filters to see more results, or add a new product."
               action={
-                <CustomButton variant="outline" onClick={onClearFilter}>
+                <CustomButton variant="ghost" onClick={onClearFilter}>
                   Clear Filter
                 </CustomButton>
               }

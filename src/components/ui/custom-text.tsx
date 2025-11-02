@@ -13,7 +13,7 @@ const VARIANT_MAP = {
   h3: ["h3", "text-[24px] font-bold text-[#131316]"],
   strong: ["strong", "text-[16px] font-semibold text-[#131316]"],
   p: ["p", "text-[16px] font-medium text-[#131316]"],
-  small: ["small", "text-[14px] font-medium text-[#56616B]"],
+  small: ["small", "text-[14px] font-500 text-[#56616B]"],
 } as const;
 
 const CustomText: React.FC<CustomTextProps> = ({

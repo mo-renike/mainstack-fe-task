@@ -10,6 +10,7 @@ import {
   transactionStatusOptions,
   transactionTypeOptions,
 } from "../../constants";
+import { deriveOptionsFromTransactions } from "../../utils/helpers";
 import { CheckboxDropdown } from "./checkbox-dropdown";
 import CustomDrawer from "../layout/custom-drawer";
 import CustomText from "./custom-text";
@@ -70,7 +71,10 @@ const FilterPanel: FC<FilterPanelProps> = ({
       selectedStatuses.length > 0 &&
       selectedStatuses.length < transactionStatusOptions.length;
     const hasActiveFilters =
-      Boolean(start) || Boolean(end) || typeFilterApplied || statusFilterApplied;
+      Boolean(start) ||
+      Boolean(end) ||
+      typeFilterApplied ||
+      statusFilterApplied;
 
     onApply(filtered, hasActiveFilters);
     handleClose();
@@ -98,6 +102,16 @@ const FilterPanel: FC<FilterPanelProps> = ({
 
   const displayStart = startDate ? formatDisplayDate(startDate) : "Start date";
   const displayEnd = endDate ? formatDisplayDate(endDate) : "End date";
+
+  const computedTypeOptions =
+    transactions && transactions.length > 0
+      ? deriveOptionsFromTransactions(transactions, "type")
+      : transactionTypeOptions;
+
+  const computedStatusOptions =
+    transactions && transactions.length > 0
+      ? deriveOptionsFromTransactions(transactions, "status")
+      : transactionStatusOptions;
 
   function handleDateSelect(which: "start" | "end", date: Date) {
     const iso = toIso(date);
@@ -182,7 +196,7 @@ const FilterPanel: FC<FilterPanelProps> = ({
           <CustomText variant="strong" text="Transaction Type" />
           <div className="mt-2">
             <CheckboxDropdown
-              options={transactionTypeOptions}
+              options={computedTypeOptions}
               value={selectedTypes}
               onChange={setSelectedTypes}
               placeholder="Select transaction types"
@@ -194,7 +208,7 @@ const FilterPanel: FC<FilterPanelProps> = ({
           <CustomText variant="strong" text="Transaction Status" />
           <div className="mt-2">
             <CheckboxDropdown
-              options={transactionStatusOptions}
+              options={computedStatusOptions}
               value={selectedStatuses}
               onChange={setSelectedStatuses}
               placeholder="Select statuses"

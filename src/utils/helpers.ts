@@ -79,3 +79,36 @@ export function getErrorMessage(error: unknown): string {
   }
   return "Something went wrong.";
 }
+
+import type { CheckboxOption } from "../components/ui/checkbox-dropdown";
+
+/**
+ * Derive checkbox options for a given key ("type" or "status") from
+ * a list of transactions. Falls back to an empty array if none found.
+ */
+export function deriveOptionsFromTransactions(
+  transactions: TransactionResponse[] = [],
+  key: "type" | "status"
+): CheckboxOption[] {
+  const set = new Set<string>();
+  for (const t of transactions) {
+    const raw = key === "type" ? t.type : t.status;
+    if (typeof raw === "string" && raw.trim() !== "") {
+      set.add(raw.trim());
+    }
+  }
+
+  const arr = Array.from(set);
+
+  // Sort alphabetically for consistent display. Calling code can reorder if needed.
+  arr.sort((a, b) => a.localeCompare(b));
+
+  const toLabel = (v: string) =>
+    v
+      .replace(/_/g, " ")
+      .split(" ")
+      .map((part) => (part ? part[0].toUpperCase() + part.slice(1) : part))
+      .join(" ");
+
+  return arr.map((value) => ({ value, label: toLabel(value) }));
+}
