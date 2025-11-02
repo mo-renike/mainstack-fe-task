@@ -14,7 +14,10 @@ type ApiGetOptions = {
   signal?: AbortSignal;
 };
 
-export async function apiGet<T>(path: string, options: ApiGetOptions = {}): Promise<T> {
+export async function apiGet<T>(
+  path: string,
+  options: ApiGetOptions = {}
+): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method: "GET",
     headers: {
@@ -30,8 +33,8 @@ export async function apiGet<T>(path: string, options: ApiGetOptions = {}): Prom
       if (errorBody && typeof errorBody.message === "string") {
         message = errorBody.message;
       }
-    } catch {
-      // swallow JSON parse errors and use status text fallback
+    } catch (err) {
+      console.error(err);
     }
     throw new ApiError(message, response.status);
   }

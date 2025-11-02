@@ -49,3 +49,33 @@ export function toTitleCase(value: string): string {
     )
     .join(" ");
 }
+
+import type { TransactionResponse } from "../services/types";
+
+export function getTransactionVisualType(
+  transaction: TransactionResponse
+): "deposit" | "withdrawal" | "pending" | "failed" {
+  if (transaction.status === "pending") return "pending";
+  if (transaction.status === "failed") return "failed";
+  return transaction.type === "withdrawal" ? "withdrawal" : "deposit";
+}
+
+export function getTransactionTitle(transaction: TransactionResponse): string {
+  if (transaction.metadata?.product_name) {
+    return transaction.metadata.product_name;
+  }
+  if (transaction.type === "withdrawal") {
+    return "Cash withdrawal";
+  }
+  if (transaction.metadata?.type) {
+    return toTitleCase(transaction.metadata.type);
+  }
+  return toTitleCase(transaction.type);
+}
+
+export function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return "Something went wrong.";
+}

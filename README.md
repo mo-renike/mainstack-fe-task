@@ -1,73 +1,82 @@
-# React + TypeScript + Vite
+# Mainstack Revenue Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive revenue dashboard built with React, TypeScript, and Vite. It connects to the Mainstack FE task API to surface wallet metrics, render cumulative revenue trends, and list recent transactions with contextual status indicators.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Revenue summary cards with ledger, payout, and revenue totals sourced from the remote wallet API.
+- Available balance panel with a Recharts area visualization that aggregates transactions by day.
+- Transaction feed that highlights deposits, withdrawals, pending, and failed payments with tailored visuals.
+- Filter drawer skeleton for narrowing transaction data (UI in place and ready for future wiring).
+- Robust empty, loading, and error states to keep the experience clear across edge cases.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript, bundled with Vite.
+- Tailwind CSS (via the official Vite plugin) for styling.
+- React Query for data fetching and caching.
+- Recharts for lightweight data visualization.
+- Vitest for unit testing utilities.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18 or newer.
+- npm 9+ (ships with modern Node releases).
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Running the app
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+The dev server starts on http://localhost:5173 by default. The app reads data from `https://fe-task-api.mainstack.io`.
+
+### Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Testing
+
+Minimal unit coverage lives under `src/utils`. Run the suite with:
+
+```bash
+npm run test
+```
+
+Vitest executes tests once in run mode; append `--watch` locally for rapid feedback.
+
+## Project Structure
+
+```
+src/
+  components/        // Reusable UI elements and feature components
+  pages/             // Top-level route screens
+  services/          // API client and React Query hooks
+  utils/             // Formatting helpers and testable utilities
+```
+
+## Linting
+
+```bash
+npm run lint
+```
+
+The ESLint configuration ships with the project and enforces TypeScript best practices.
+
+## Environment Notes
+
+- All API calls are read-only and use browser `fetch`. No extra configuration is required.
+- Tailwind CSS utilities are available globally via `@tailwindcss/vite`.
+
+Feel free to adapt the dashboard, extend the filtering panel, or wire additional tests around UI components as you iterate.
