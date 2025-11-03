@@ -1,13 +1,13 @@
 # Mainstack Revenue Dashboard
 
-A revenue dashboard built with React, TypeScript, and Vite. It connects to the Mainstack FE task API to surface wallet metrics, render cumulative revenue trends, and list recent transactions with contextual status indicators.
+A revenue dashboard built with React, TypeScript, and Vite. It connects to the Mainstack FE task API to display wallet metrics, render cumulative revenue trends, and list recent transactions with contextual status indicators.
 
 ## Features
 
-- Revenue summary cards with ledger, payout, and revenue totals sourced from the remote wallet API.
-- Available balance panel with a Recharts area visualization that aggregates transactions by day.
-- Transaction feed that highlights deposits, withdrawals, pending, and failed payments with tailored visuals.
-- Filter drawer skeleton for narrowing transaction data (UI in place and ready for future wiring).
+- Revenue summary cards with ledger, payout, and revenue totals sourced from the wallet API.
+- Available balance panel with a Recharts area visualization.
+- Transaction feed that highlights deposits, withdrawals, pending, and failed payments with visuals.
+- Filter drawer panel for narrowing transaction data.
 - Robust empty, loading, and error states to keep the experience clear across edge cases.
 
 ## Tech Stack
@@ -41,7 +41,7 @@ The dev server starts on http://localhost:5173 by default. The app reads data fr
 
 ## Testing
 
-unit coverage lives under `src/utils`. Run tests with:
+Run tests with:
 
 ```bash
 npm run test
