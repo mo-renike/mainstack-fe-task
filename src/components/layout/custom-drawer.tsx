@@ -45,7 +45,7 @@ export const CustomDrawer: React.FC<CustomDrawerProps> = ({
     .join(" ");
 
   const drawerClasses = [
-    "fixed top-0 right-0 z-50 flex h-full w-[456px] flex-col transform bg-white p-[24px] shadow-lg transition-transform duration-700 ease-in-out",
+    "fixed top-0 right-0 z-50 flex h-full md:w-[456px] w-full flex-col transform bg-white p-[24px] shadow-lg transition-transform duration-700 ease-in-out",
     open ? "translate-x-0" : "translate-x-full",
     className,
   ]
